@@ -1,136 +1,165 @@
 //lock the other available enemies until defender is defeated/lock defender
 
 //====//
-/*var health = 0;
-var attackPower = 0;
-var defensePower = 0;
-var selectedChar = false;*/
-var winCounter = 0; //score for wins
-var loseCounter = 0; //score for losses
-var chosenCharacter = "";
-var enemyCharacter = "";
-var canIClick = true;
+//var winCounter = 0; //score for wins
+//var loseCounter = 0; //score for losses
+var chosenCharacter;
+var enemyCharacter;
 var stackingAtk = 0; //stacking atk power
 var defeatedCounter = 0; //counter for number of defeated enemies
-var rick = {
-	health: 120,
-	attackPower: 10,
-	defensePower: 15,
-	selectedChar: false,
-	canIClick: true, //can I click the images anymore?
-	name: "Rick Grimes"
-};
-var daryl = {
-	health: 150,
-	attackPower: 20,
-	defensePower: 13,
-	selectedChar: false,
-	canIClick: true,
-	name: "Daryl Dixon"
-};
-var michonne = {
-	health: 100,
-	attackPower: 35,
-	defensePower: 10,
-	selectedChar: false,
-	canIClick: true,
-	name: "Michonne"
-};
-var negan = {
-	health: 200,
-	attackPower: 25,
-	defensePower: 17,
-	selectedChar: false,
-	canIClick: true,
-	name: "Negan"
+var allThemCharacters = {
+ 	rick: {
+		health: 120,
+		attackPower: 5,
+		defensePower: 15,
+		name: "Rick Grimes"
+	},
+	daryl: {
+		health: 150,
+		attackPower: 10,
+		defensePower: 13,
+		name: "Daryl Dixon"
+	},
+	michonne: {
+		health: 110,
+		attackPower: 25,
+		defensePower: 10,
+		name: "Michonne"
+	},
+	negan: {
+		health: 200,
+		attackPower: 12,
+		defensePower: 17,
+		name: "Negan"
+	}
 };
 //Start by clicking on one of the four images at the top
 $(document).ready(function() {
-	var rickGrimes = $(".character1").data(rick);
-	var darylDixon = $(".character2").data(daryl);
-	var michonneKat = $(".character3").data(michonne);
-	var neganLucille = $(".character4").data(negan);
-	$(".fightClub").hide();
-	$(".itsTheEnemy").hide();
-	$(".choosingChar").hide();
-	if(canIClick === true){
-		$(".characterBox").on("click", function() {
-			chosenCharacter = $(this).data(); //store data on click event
-			console.log(chosenCharacter);
-			alert("You picked " + chosenCharacter.name);
-			chosenCharacter.selectedChar = true;
-			if(chosenCharacter.selectedChar !== true){
-				//Remaining 3 characters move down to enemies available to attack
-				//add class to change css background
-				$(".characterBox").addClass("enemies");
-				console.log(".characterBox");
-				$(".characterBox").css("background-color", "red");
-
-			} else{
-				//Clicked character moves under Your Character, make character unclickable
-				$(chosenCharacter).addClass("itsYou");
-				console.log(chosenCharacter);
-				$(chosenCharacter).appendTo("#choosingChar");
-				console.log(chosenCharacter);
-				$(".characterBox").css("background-color", "green");
-				//$(chosenCharacter).show();
-				//add class to change css background
-				canIClick = false; //make your character unclickable after the first click
-			}
-			//Once a character is clicked, the four selectable characters hide
-			$(".selectYourChar").hide();
-			
-		});
+	$(".characterBox").hover(function(){
+		var temp = this.id;
+		var showStats = allThemCharacters[temp];
+		$(".aboutThem").html("<p>" + showStats.name + " has : " + showStats.health + " health points, " + showStats.attackPower + " attack power, and " + showStats.defensePower + " defense power.</p>");
+	},
+	function(){
+		if(chosenCharacter === undefined){
+			$(".aboutThem").html("<p>Choose your character. Hover over a character to view their stats.</p>");
+		} else if (chosenCharacter !== undefined && enemyCharacter === undefined){
+			$(".aboutThem").html("<p>Choose your opponent. Hover over a character to view their stats.</p>");
+		}
 	}
+	);
+
+	$(".characterBox").on("click", function() {
+		if(chosenCharacter === undefined){
+			var temp = this.id;
+			chosenCharacter = allThemCharacters[temp];
+			console.log(chosenCharacter);
+			stackingAtk = chosenCharacter.attackPower;
+			$(".characterBox").removeClass("playable");
+			$(".characterBox").addClass("enemies");
+			$(".selectYourChar").appendTo(".itsTheEnemy");
+			$(this).appendTo(".choosingChar");
+			$(this).addClass("itsYou");
+		} else if (enemyCharacter === undefined && chosenCharacter !== undefined){
+			var temp = this.id;
+			enemyCharacter = allThemCharacters[temp];
+			console.log(enemyCharacter);
+			$(this).removeClass("enemies"); //remove enemies class 
+			$(this).addClass("barSoap"); //current defender
+			$(this).appendTo(".fightClub"); //Move to defender block
+			$(".barSoap").css("background-color", "black"); //change background of defenders to black
+		}
+	});
+	function resetGame() {
+		chosenCharacter = undefined;
+		enemyCharacter = undefined;
+		stackingAtk = 0; 
+		defeatedCounter = 0; 
+		allThemCharacters = {
+		 	rick: {
+				health: 120,
+				attackPower: 5,
+				defensePower: 15,
+				name: "Rick Grimes"
+			},
+			daryl: {
+				health: 150,
+				attackPower: 10,
+				defensePower: 13,
+				name: "Daryl Dixon"
+			},
+			michonne: {
+				health: 110,
+				attackPower: 20,
+				defensePower: 10,
+				name: "Michonne"
+			},
+			negan: {
+				health: 200,
+				attackPower: 12,
+				defensePower: 17,
+				name: "Negan"
+			}
+		};
+		//$(".choosingChar").html("");
+		$(".characterBox").removeClass("enemyCharacter");
+		$(".characterBox").removeClass("enemies");
+		$(".characterBox").addClass("playable");
+		$(".characterBox").removeClass("itsYou");
+		$(".barSoap").show();
+		//$(".barSoap").css("background-color", "white");
+		$(".characterBox").removeClass("barSoap");
+		$(".aboutThem").html("Hover over a character to see their stats");
+		$(".characterBox").appendTo(".selectYourChar");
+		$(".selectYourChar").appendTo("#characterSelect");
+		
+	}
+		
 	//Player must select one of the available enemies to attack
 	//Selected enemy moves to Defender position
-	if(canIClick === true){
-		$(".characterBox").on("click", function() {
-			enemyCharacter = $(this).data();
-			console.log(enemyCharacter);
-			alert("You are fighting against " + enemyCharacter.name);
-			canIClick = false;
-		});
-	}
 	//player must click Attack to deal damage to defender
 	//on button click, apply function += damage, decrease hp by enemy counter attack
 	//change html to reflect combat text
 	//On button click, do no function unless there is a defender
-	$(".btn").on("click", function(){
-		attacking();
-		winCondition();
-		loseCondition();
+	$(".btn-danger").on("click", function(){
+		if(chosenCharacter !== undefined && enemyCharacter !== undefined){
+			enemyCharacter.health -= chosenCharacter.attackPower;
+			chosenCharacter.health -= enemyCharacter.defensePower;
+			combatLog();
+			chosenCharacter.attackPower += stackingAtk;
+			whoDead();
+			winCondition();
+		}
+	});
+	//Reset Button
+	$("#resetbtn").on("click", function(){
+		resetGame();
+		console.log("Reset Button Clicked");
 	});
 	//if there is an enemy in the defender, button does stuff, else alert
-	function attacking(){
-		stackingAtk += chosenCharacter.attackPower;
-		chosenCharacter.health -= enemyCharacter.defensePower;
-		enemyCharacter.health -= stackingAtk;
-		$("combatText").html("You deal " + stackingAtk + " damage to " + enemyCharacter.name + ". " + enemyCharacter.name + " has " + enemyCharacter.health + " health left.");
-		$("counterCombatText").html(enemyCharacter.name + " deals " + enemyCharacter.defensePower + " damage to you. You have " + chosenCharacter.health + " health left.");
+	function combatLog(){
+		var fightingLog = "<p> You attack " + enemyCharacter.name + " for " + chosenCharacter.attackPower + " health points.</p>";
+		fightingLog += "<p> " + enemyCharacter.name + " counter attacks you for " + enemyCharacter.defensePower + " health points.</p>";
+		fightingLog += "<p> Your remaining health points: " + chosenCharacter.health + ".</p>";
+		fightingLog += "<p> " + enemyCharacter.name + "'s remaining health points: " + enemyCharacter.health + ".</p>";
+		$(".aboutThem").html(fightingLog);
 	}
-	function winCondition(){
+	function whoDead(){
 		if(enemyCharacter.health < 1 && chosenCharacter.health > 0){
+			alert("You've defeated " + enemyCharacter.name);
+			$(".barSoap").hide();
+			enemyCharacter = undefined;
+			$(".aboutThem").html("Choose your next opponent");
 			defeatedCounter++;
-			if(defeatedCounter === 3){
-				alert("You've won the game");
-				//reset button show?
-				//Reset button appears after all enemies are defeated
-			} else { 
-//if enemy dies, change html to you have defeated ___, choose to fight anothe enemy, hide defeated defender
-				alert("You've defeated " + enemyCharacter.name + ". Choose another enemy to fight.");
-			}
+		} else if (chosenCharacter.health < 1){ //game ends if you hp is reduced below 0
+			alert("Game over, you lose. Try again.");
+			resetGame();
 		}
 	}
-	//game ends if your hp is reduced below 0 or you defeat all enemies
-	function loseCondition(){
-		if(chosenCharacter.health < 1){
-			alert("Game over, you lose. Try again.");
-			//reset button show?
+	function winCondition(){
+		if (defeatedCounter === 3){
+			alert("You've won the game!");
+			resetGame();
 		}
 	}
 });
-//value is always a string from html
-/*$("div").each(function (index, value) {
-	$(this).attr("id");
-});*/

@@ -30,35 +30,23 @@
 		<div class="row">
 			<div class="col-md-7">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-12" id="characterSelect">
 						<section class="selectYourChar">
-						<div class="characterBox character1">
-						<!--<div class="characterBox character1 tooltip">
-							<span class="tooltiptext">HP:120 Atk:10 Def:15</span>-->
+						<div class="characterBox playable" id="rick">
 							<p class="characterName"> Rick Grimes </p>
 							<img src="assets/images/rick.jpg" class="selectableChar" alt="Rick Grimes" >
-							<p class="characterHealth">120</p>
 						</div>
-						<div class="characterBox character2">
-						<!--<div class="characterBox character2 tooltip">
-							<span class="tooltiptext">HP:150 Atk:20 Def:13</span>-->
+						<div class="characterBox playable" id="daryl">
 							<p class="characterName"> Daryl Dixon </p>
 							<img src="assets/images/daryl.jpg" class="selectableChar" alt="Daryl Dixon">
-							<p class="characterHealth">150</p>
 						</div>
-						<div class="characterBox character3">
-						<!--<div class="characterBox character3 tooltip">
-							<span class="tooltiptext">HP:100 Atk:35 Def:10</span>-->
+						<div class="characterBox playable" id="michonne">
 							<p class="characterName"> Michonne </p>
 							<img src="assets/images/michonne.jpg" class="selectableChar" alt="Michonne">
-							<p class="characterHealth">100</p>
 						</div>
-						<div class="characterBox character4">
-						<!--<div class="characterBox character4 tooltip">
-							<span class="tooltiptext">HP:200 Atk:25 Def:17</span>-->
+						<div class="characterBox playable" id="negan">
 							<p class="characterName"> Negan </p>
 							<img src="assets/images/negan.jpg" class="selectableChar" alt="Negan">
-							<p class="characterHealth">200</p>
 						</div>
 						</section>
 					</div>
@@ -66,51 +54,11 @@
 						<div class="col-md-12">
 							<h2>Your character</h2>
 							<section class="choosingChar">
-								<div class="characterBox character1">
-									<p class="characterName"> Rick Grimes </p>
-									<img src="assets/images/rick.jpg" class="selectableChar" alt="Rick Grimes" >
-									<p class="characterHealth">120</p>
-								</div>
-								<div class="characterBox character2">
-									<p class="characterName"> Daryl Dixon </p>
-									<img src="assets/images/daryl.jpg" class="selectableChar" alt="Daryl Dixon">
-									<p class="characterHealth">150</p>
-								</div>
-								<div class="characterBox character3">
-									<p class="characterName"> Michonne </p>
-									<img src="assets/images/michonne.jpg" class="selectableChar" alt="Michonne">
-									<p class="characterHealth">100</p>
-								</div>
-								<div class="characterBox character4">
-									<p class="characterName"> Negan </p>
-									<img src="assets/images/negan.jpg" class="selectableChar" alt="Negan">
-									<p class="characterHealth">200</p>
-								</div>
 							</section>
 							<div class="row">
 								<div class="col-md-12">
 									<h2>Enemies Available to Attack</h2>
 									<section class="itsTheEnemy">
-										<div class="characterBox character1">
-											<p class="characterName"> Rick Grimes </p>
-											<img src="assets/images/rick.jpg" class="selectableChar" alt="Rick Grimes" >
-											<p class="characterHealth">120</p>
-										</div>
-										<div class="characterBox character2">
-											<p class="characterName"> Daryl Dixon </p>
-											<img src="assets/images/daryl.jpg" class="selectableChar" alt="Daryl Dixon">
-											<p class="characterHealth">150</p>
-										</div>
-										<div class="characterBox character3">
-											<p class="characterName"> Michonne </p>
-											<img src="assets/images/michonne.jpg" class="selectableChar" alt="Michonne">
-											<p class="characterHealth">100</p>
-										</div>
-										<div class="characterBox character4">
-											<p class="characterName"> Negan </p>
-											<img src="assets/images/negan.jpg" class="selectableChar" alt="Negan">
-											<p class="characterHealth">200</p>
-										</div>
 									</section>
 									<div class="row">
 										<div class="col-md-12">
@@ -119,26 +67,6 @@
 											<br>
 											<h2>Defender</h2>
 											<section class="fightClub">
-												<div class="characterBox character1">
-													<p class="characterName"> Rick Grimes </p>
-													<img src="assets/images/rick.jpg" class="selectableChar" alt="Rick Grimes" >
-													<p class="characterHealth">120</p>
-												</div>
-												<div class="characterBox character2">
-													<p class="characterName"> Daryl Dixon </p>
-													<img src="assets/images/daryl.jpg" class="selectableChar" alt="Daryl Dixon">
-													<p class="characterHealth">150</p>
-												</div>
-												<div class="characterBox character3">
-													<p class="characterName"> Michonne </p>
-													<img src="assets/images/michonne.jpg" class="selectableChar" alt="Michonne">
-													<p class="characterHealth">100</p>
-												</div>
-												<div class="characterBox character4">
-													<p class="characterName"> Negan </p>
-													<img src="assets/images/negan.jpg" class="selectableChar" alt="Negan">
-													<p class="characterHealth">200</p>
-												</div>
 											</section>
 											<br>
 											<p id="combatText"></p>
@@ -152,9 +80,8 @@
 				</div>
 			</div>
 			<div class="col-md-5">
-				<!--<h2>HP: Health Points</h2>
-				<h2>A: Attack Power</h2>
-				<h2>D: Defense Power</h2>-->
+				<p class="aboutThem">Hover over a character to view their stats</p>
+				<button id="resetbtn" class="btn">Reset Game</button>
 			</div>
 		</div>
 	</div>
