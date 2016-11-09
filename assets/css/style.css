@@ -9,6 +9,7 @@
 	left: 0px;
 	top: 0px;
 	z-index: -1;
+	background-color: white;
 }
 .stretch {
 	width: 100%;
@@ -45,4 +46,7 @@ img {
 }
 .barSoap {
 	background-color: white;
+}
+.playable {
+	background-color:white;
 }

@@ -102,12 +102,13 @@ $(document).ready(function() {
 			}
 		};
 		//$(".choosingChar").html("");
+		$(".barSoap").show();
 		$(".characterBox").removeClass("enemyCharacter");
 		$(".characterBox").removeClass("enemies");
 		$(".characterBox").addClass("playable");
 		$(".characterBox").removeClass("itsYou");
-		$(".barSoap").show();
-		//$(".barSoap").css("background-color", "white");
+		//$(".barSoap").show();
+		$(".barSoap").css("background-color", "");
 		$(".characterBox").removeClass("barSoap");
 		$(".aboutThem").html("Hover over a character to see their stats");
 		$(".characterBox").appendTo(".selectYourChar");
