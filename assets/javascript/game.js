@@ -1,12 +1,15 @@
-//lock the other available enemies until defender is defeated/lock defender
-
-//====//
-//var winCounter = 0; //score for wins
-//var loseCounter = 0; //score for losses
+//====================//
+//====variables=======//
+//====================//
+//The user character
 var chosenCharacter;
+//The enemy character
 var enemyCharacter;
-var stackingAtk = 0; //stacking atk power
-var defeatedCounter = 0; //counter for number of defeated enemies
+//stacking atk power
+var stackingAtk = 0; 
+//counter for number of defeated enemies
+var defeatedCounter = 0; 
+//Character objects
 var allThemCharacters = {
  	rick: {
 		health: 120,
@@ -33,13 +36,18 @@ var allThemCharacters = {
 		name: "Negan"
 	}
 };
+//=====================//
+//=====Methods=========//
+//=====================//
 //Start by clicking on one of the four images at the top
 $(document).ready(function() {
+	//On character hover, display character stats
 	$(".characterBox").hover(function(){
 		var temp = this.id;
 		var showStats = allThemCharacters[temp];
 		$(".aboutThem").html("<p>" + showStats.name + " has : " + showStats.health + " health points, " + showStats.attackPower + " attack power, and " + showStats.defensePower + " defense power.</p>");
 	},
+	//Give instructions on the side to tell user to choose a character
 	function(){
 		if(chosenCharacter === undefined){
 			$(".aboutThem").html("<p>Choose your character. Hover over a character to view their stats.</p>");
@@ -48,18 +56,21 @@ $(document).ready(function() {
 		}
 	}
 	);
-
+	//On character box click, choose the user character
 	$(".characterBox").on("click", function() {
 		if(chosenCharacter === undefined){
 			var temp = this.id;
 			chosenCharacter = allThemCharacters[temp];
 			console.log(chosenCharacter);
 			stackingAtk = chosenCharacter.attackPower;
-			$(".characterBox").removeClass("playable");
-			$(".characterBox").addClass("enemies");
+			$(".characterBox").removeClass("playable"); //remove playable to move it awayw from the playable section
+			$(".characterBox").addClass("enemies"); 
 			$(".selectYourChar").appendTo(".itsTheEnemy");
 			$(this).appendTo(".choosingChar");
 			$(this).addClass("itsYou");
+		//else choose an enemy character
+		//Player must select one of the available enemies to attack
+		//Selected enemy moves to Defender position
 		} else if (enemyCharacter === undefined && chosenCharacter !== undefined){
 			var temp = this.id;
 			enemyCharacter = allThemCharacters[temp];
@@ -70,6 +81,7 @@ $(document).ready(function() {
 			$(".barSoap").css("background-color", "black"); //change background of defenders to black
 		}
 	});
+	//reset game function
 	function resetGame() {
 		chosenCharacter = undefined;
 		enemyCharacter = undefined;
@@ -110,17 +122,13 @@ $(document).ready(function() {
 		$(".characterBox").removeClass("barSoap");
 		$(".aboutThem").html("Hover over a character to see their stats");
 		$(".characterBox").appendTo(".selectYourChar");
-		$(".selectYourChar").appendTo("#characterSelect");
-		
+		$(".selectYourChar").appendTo("#characterSelect");	
 	}
-		
-	//Player must select one of the available enemies to attack
-	//Selected enemy moves to Defender position
 	//player must click Attack to deal damage to defender
 	//on button click, apply function += damage, decrease hp by enemy counter attack
 	//change html to reflect combat text
-	//On button click, do no function unless there is a defender
 	$(".btn-danger").on("click", function(){
+		//On button click, do no function unless there is a defender
 		if(chosenCharacter !== undefined && enemyCharacter !== undefined){
 			enemyCharacter.health -= chosenCharacter.attackPower;
 			chosenCharacter.health -= enemyCharacter.defensePower;
@@ -135,7 +143,7 @@ $(document).ready(function() {
 		resetGame();
 		console.log("Reset Button Clicked");
 	});
-	//if there is an enemy in the defender, button does stuff, else alert
+	//show the combat log
 	function combatLog(){
 		var fightingLog = "<p> You attack " + enemyCharacter.name + " for " + chosenCharacter.attackPower + " health points.</p>";
 		fightingLog += "<p> " + enemyCharacter.name + " counter attacks you for " + enemyCharacter.defensePower + " health points.</p>";
@@ -143,6 +151,7 @@ $(document).ready(function() {
 		fightingLog += "<p> " + enemyCharacter.name + "'s remaining health points: " + enemyCharacter.health + ".</p>";
 		$(".aboutThem").html(fightingLog);
 	}
+	//combat function, who dies?!
 	function whoDead(){
 		if(enemyCharacter.health < 1 && chosenCharacter.health > 0){
 			alert("You've defeated " + enemyCharacter.name);
@@ -150,11 +159,12 @@ $(document).ready(function() {
 			enemyCharacter = undefined;
 			$(".aboutThem").html("Choose your next opponent");
 			defeatedCounter++;
-		} else if (chosenCharacter.health < 1){ //game ends if you hp is reduced below 0
+		} else if (chosenCharacter.health < 1){ //game ends if your hp is reduced below 0
 			alert("Game over, you lose. Try again.");
 			resetGame();
 		}
 	}
+	//win condition
 	function winCondition(){
 		if (defeatedCounter === 3){
 			alert("You've won the game!");
