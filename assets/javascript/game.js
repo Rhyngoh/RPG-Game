@@ -64,8 +64,8 @@ $(document).ready(function() {
 			console.log(chosenCharacter);
 			stackingAtk = chosenCharacter.attackPower;
 			$(".characterBox").removeClass("playable"); //remove playable to move it awayw from the playable section
-			$(".characterBox").addClass("enemies"); 
-			$(".selectYourChar").appendTo(".itsTheEnemy");
+			$(".characterBox").addClass("enemies"); //make the rest of the characters enemies
+			$(".selectYourChar").appendTo(".itsTheEnemy"); //move the rest of the characters to enemies section
 			$(this).appendTo(".choosingChar");
 			$(this).addClass("itsYou");
 		//else choose an enemy character
